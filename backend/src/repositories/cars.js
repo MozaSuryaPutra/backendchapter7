@@ -109,6 +109,11 @@ exports.getCarsSearched = async (capacity, availableAt) => {
             lte: new Date(availableAt),
           },
         },
+        {
+          available: {
+            equals: true,
+          },
+        },
       ],
     },
     include: {

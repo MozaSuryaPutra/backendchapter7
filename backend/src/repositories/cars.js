@@ -86,3 +86,40 @@ exports.deleteCarsById = async (id) => {
   const serializedCar = JSONBigInt.stringify(deletedCar);
   return JSONBigInt.parse(serializedCar);
 };
+
+exports.getCarsSearched = async (capacity, availableAt) => {
+  // Convert capacity to number if it is a string
+  const numericCapacity = Number(capacity);
+
+  const searchedCars = await prisma.cars.findMany({
+    where: {
+      AND: [
+        {
+          carsModels: {
+            // Melakukan filtering berdasarkan capacity yang ada di car_types
+            car_types: {
+              capacity: {
+                gte: numericCapacity,
+              },
+            },
+          },
+        },
+        {
+          availableAt: {
+            lte: new Date(availableAt),
+          },
+        },
+      ],
+    },
+    include: {
+      carsModels: {
+        include: {
+          car_types: true,
+        },
+      },
+    },
+  });
+
+  const serializedCars = JSONBigInt.stringify(searchedCars);
+  return JSONBigInt.parse(serializedCars);
+};

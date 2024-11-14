@@ -66,3 +66,11 @@ exports.deleteCarsById = async (id) => {
   }
   return deleteCars;
 };
+
+exports.getCarsSearched = async (capacity, availableAt) => {
+  const cars = await carRepository.getCarsSearched(capacity, availableAt);
+  if (cars.length < 1) {
+    throw new NotFoundError("Car Is Not Found");
+  }
+  return cars;
+};

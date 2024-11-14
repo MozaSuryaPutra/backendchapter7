@@ -46,3 +46,11 @@ exports.deleteCarsById = async (req, res, next) => {
   const deleteTheCars = await carService.deleteCarsById(id);
   successResponse(res, deleteTheCars, "Delete Car is Success");
 };
+
+exports.getCarsSearched = async (req, res, next) => {
+  const data = await carService.getCarsSearched(
+    req.query?.capacity,
+    req.query?.availableAt
+  );
+  successResponse(res, data);
+};

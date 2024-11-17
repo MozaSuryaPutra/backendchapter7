@@ -21,7 +21,7 @@ const router = express.Router();
 router.get("/", authorization(1, 2), validateGetCars, getCars);
 router.get(
   "/search",
-  authorization(1, 2),
+
   validateGetCarsSearched,
   getCarsSearched
 );
